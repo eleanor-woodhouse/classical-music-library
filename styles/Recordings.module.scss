@@ -1,0 +1,30 @@
+.recordingsTable {
+    width: 100%;
+    position: relative;
+    border-collapse: collapse;
+    padding: 2em;
+}
+
+th.composer{
+    border-left: solid black 1px;
+}
+
+th.performer {
+    border-left: solid black 1px;
+}
+
+th.period {
+    border-left: solid black 1px;
+}
+
+td.composer {
+    border-left: solid black 1px;
+}
+
+td.performer {
+    border-left: solid black 1px;
+}
+
+td.period {
+    border-left: solid black 1px;
+}
