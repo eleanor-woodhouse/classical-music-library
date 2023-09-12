@@ -1,11 +1,15 @@
-import { Filter } from "./types"
+import { Filter } from "../app/types"
 
-const filters: Filter[] = [
+// TODO dynamically create this array from the recordingsData
+
+const filterData: Filter[] = [
   {
+    id: "instruments",
     name: "Instruments",
     options: ["Piano", "Strings", "Voice", "Orchestra"],
   },
   {
+    id: "composer",
     name: "Composer",
     options: [
       {
@@ -35,9 +39,10 @@ const filters: Filter[] = [
     ],
   },
   {
+    id: "period",
     name: "Period",
     options: ["Romantic", "Impressionist", "Classical"],
   },
 ]
 
-export default filters
+export default filterData

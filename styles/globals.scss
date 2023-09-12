@@ -3,7 +3,8 @@ body {
     // background-color: #fdc7ed;
     // color: #7695e7;
     cursor: default;
-    background-color: #cccccc;
+    // background-color: #cccccc;
+    background-color: snow;
     font-size: 17px;
 }
 
@@ -51,7 +52,7 @@ th {
     text-overflow: ellipsis;
     white-space: nowrap;
     border-bottom: solid black 1px;
-    color: navy;
+    color: rgb(255, 4, 4);
 }
 
 tbody {

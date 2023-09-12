@@ -1,6 +1,6 @@
-import { Recording } from "./types"
+import { Recording } from "../types"
 
-const recordingsData: Recording[] = [
+export const recordingsData: Recording[] = [
   {
     id: 1,
     name: "Debussy & Ravel: String Quartets",
@@ -180,5 +180,3 @@ const recordingsData: Recording[] = [
     url: "https://open.spotify.com/album/3aVRhOEridUNs7e0OLUoqL?si=XR0hAAzPQeaCl-vyN16H7A",
   },
 ]
-
-export default recordingsData

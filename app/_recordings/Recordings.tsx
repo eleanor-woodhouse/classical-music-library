@@ -1,4 +1,4 @@
-import { Recording } from "./types"
+import { Recording } from "../types"
 import styles from "@/styles/Recordings.module.scss"
 
 export default function Recordings({ recordings }: { recordings: Recording[] }) {
