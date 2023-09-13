@@ -7,6 +7,7 @@ export default function Recordings({ recordings }: { recordings: Recording[] }) 
       <table className={styles.recordingsTable}>
         <thead>
           <tr>
+            {/* TODO remove hard coding here? */}
             <th>Recording</th>
             <th className={styles.composer}>Composer</th>
             <th className={styles.performer}>Performer</th>
@@ -18,14 +19,17 @@ export default function Recordings({ recordings }: { recordings: Recording[] }) 
             return (
               <tr key={recording.id}>
                 <td>
-                  <a href={recording.url}>{recording.name}</a>
+                  <a href={recording.urls.spotify}>{recording.name}</a>
                 </td>
                 <td className={styles.composer}>
                   {recording.composer.length > 1 ? (
-                    recording.composer.map((singleComposer) => {
+                    recording.composer.map((singleComposer, i, everyComposer) => {
                       return (
-                        <span key={singleComposer.lastName}>
-                          {singleComposer.firstName} {singleComposer.lastName}
+                        <span key={`${singleComposer.firstName}-${singleComposer.lastName}`}>
+                          {i === everyComposer.length - 1 ? " & " : null}
+                          {singleComposer.firstName}
+                          {singleComposer.lastName ? ` ${singleComposer.lastName}` : null}
+                          {everyComposer.length > 2 && i !== everyComposer.length - 1 ? ", " : null}
                         </span>
                       )
                     })
@@ -37,10 +41,13 @@ export default function Recordings({ recordings }: { recordings: Recording[] }) 
                 </td>
                 <td className={styles.performer}>
                   {recording.performer.length > 1 ? (
-                    recording.performer.map((singlePerformer) => {
+                    recording.performer.map((singlePerformer, i, everyPerformer) => {
                       return (
-                        <span key={singlePerformer.lastName}>
-                          {singlePerformer.firstName} {singlePerformer.lastName}
+                        <span key={`${singlePerformer.firstName}-${singlePerformer.lastName}`}>
+                          {i === everyPerformer.length - 1 ? " & " : null}
+                          {singlePerformer.firstName}
+                          {singlePerformer.lastName ? ` ${singlePerformer.lastName}` : null}
+                          {everyPerformer.length > 2 && i !== everyPerformer.length - 1 ? ", " : null}
                         </span>
                       )
                     })
@@ -52,8 +59,14 @@ export default function Recordings({ recordings }: { recordings: Recording[] }) 
                 </td>
                 <td className={styles.period}>
                   {recording.period.length > 1 ? (
-                    recording.period.map((singlePeriod) => {
-                      return <span key={singlePeriod}>{singlePeriod} </span>
+                    recording.period.map((singlePeriod, i, allPeriods) => {
+                      return (
+                        <span key={singlePeriod}>
+                          {i === allPeriods.length - 1 ? "; " : null}
+                          {singlePeriod}
+                          {allPeriods.length > 2 && i !== allPeriods.length - 1 ? ", " : null}
+                        </span>
+                      )
                     })
                   ) : (
                     <span>{recording.period[0]}</span>

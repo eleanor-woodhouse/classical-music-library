@@ -1,58 +1,41 @@
+import { categories } from "@/data/filterCategories"
+
 export type Person = {
   firstName: string
   lastName: string
 }
 
 export type Filter = {
-  id: keyof FilterState
+  id: (typeof categories)[number]
   name: string
   options: string[] | Person[]
 }
 
-type Track = {
-  title: string
-  length: string
-  composer: Person[]
+type ExternalUrls = {
+  spotify: string
+  image: string
+  api: string
 }
 
 export type Recording = {
-  id: number
+  id: string
+  addedDate: string
   name: string
-  recordingYear: number
-  compositionYear: number[]
+  recordingYear: string
+  compositionYear: string[]
   composer: Person[]
   performer: Person[]
   size: string[]
   period: string[]
   instruments: string[]
-  tracks?: Track[]
-  url: string
+  urls: ExternalUrls
+  label: string
 }
 
-export interface FilterState {
-  instruments: {
-    piano: boolean
-    strings: boolean
-    voice: boolean
-    orchestra: boolean
-  }
-  composer: {
-    chopin: boolean
-    grieg: boolean
-    liszt: boolean
-    schubert: boolean
-    debussy: boolean
-    ravel: boolean
-  }
-  period: {
-    romantic: boolean
-    impressionist: boolean
-    classical: boolean
-  }
+export type FilterState = {
+  [K in Filter["id"]]: Record<string, boolean>
 }
 
 export type SelectedFilters = {
-  instruments: string[]
-  composer: string[]
-  period: string[]
+  [K in Filter["id"]]: string[]
 }
