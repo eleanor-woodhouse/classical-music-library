@@ -6,6 +6,8 @@ body {
     // background-color: #cccccc;
     background-color: snow;
     font-size: 17px;
+    margin: 0;
+    padding: 0;
 }
 
 header {
@@ -15,6 +17,9 @@ header {
 
 h1 {
     width: fit-content;
+    margin-block-start: 0em;
+    margin-block-end: 0em;
+    font-size: 30px;
 }
 
 ul {
@@ -23,12 +28,8 @@ ul {
     padding: 1rem;
 }
 
-body {
-    margin: 1rem;
-}
-
 main {
-    width: 100%;
+    padding: 2rem;
 }
 
 table {

@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { Filter, FilterState, Person, Recording } from "../types"
-import Recordings from "../_recordings/Recordings"
+import RecordingsTable from "../_recordings/Recordings"
 import styles from "@/styles/page.module.scss"
 import { filterRecordings, collectSelectedFilters } from "./filterLogic"
 import { makeFilterState } from "./makeFilterState"
@@ -91,7 +91,7 @@ export default function Filters({ allRecordings }: { allRecordings: Recording[] 
           )
         })}
       </div>
-      <Recordings recordings={filteredRecordings} />
+      <RecordingsTable recordings={filteredRecordings} />
     </>
   )
 }
