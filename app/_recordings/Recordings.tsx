@@ -1,22 +1,86 @@
-import { Recording } from "../types"
+import { useEffect, useState } from "react"
+import { Filter, Recording } from "../types"
 import styles from "@/styles/Recordings.module.scss"
+import { sortRecords } from "./helpers"
 
 export default function RecordingsTable({ recordings }: { recordings: Recording[] }) {
+  const [sortConfig, setSortConfig] = useState<{
+    sortedField: Filter["id"] | "name" | null
+    direction: string
+  }>({
+    sortedField: null,
+    direction: "",
+  })
+  const [sortedRecordings, setSortedRecordings] = useState<Recording[]>(recordings)
+  const [arrow, setArrow] = useState({
+    name: "",
+    composer: "",
+    performer: "",
+    period: "",
+    size: "",
+    instruments: "",
+    mood: "",
+  })
+
+  function handleClick(filter: Filter["id"] | "name") {
+    let direction = "ascending"
+    if (sortConfig.direction === "ascending") {
+      direction = "descending"
+    }
+    setSortConfig({ sortedField: filter, direction })
+    refreshArrow(filter, direction)
+  }
+
+  function refreshArrow(filter: string, direction: string) {
+    setArrow({
+      name: "",
+      composer: "",
+      performer: "",
+      period: "",
+      size: "",
+      instruments: "",
+      mood: "",
+      [filter]: direction,
+    })
+  }
+
+  useEffect(() => {
+    setSortedRecordings(sortRecords(sortConfig, recordings))
+  }, [sortConfig, recordings])
+
+  const headers: (Filter["id"] | "name")[] = ["name", "composer", "performer", "period", "size", "instruments", "mood"]
+
   return (
     <table className={styles.recordingsTable}>
       <thead>
         <tr>
-          {/* TODO remove hard coding here? */}
-          <th>Recording</th>
-          <th className={styles.composer}>Composer</th>
-          <th className={styles.performer}>Performer</th>
-          <th className={styles.period}>Period</th>
-          <th className={styles.size}>Size</th>
-          <th className={styles.instrument}>Instrument</th>
+          {headers.map((header) => {
+            const headerTitle = header.charAt(0).toUpperCase() + header.slice(1)
+            return (
+              <th key={header} className={`${styles.tableHeader} ${styles[header]}`}>
+                <button className={styles.headerButton} onClick={() => handleClick(header)}>
+                  <div className={styles.tableHeaderWrapper}>{headerTitle}</div>
+                  <svg
+                    className={`${styles.headerArrow} ${styles[arrow[header]]}`}
+                    fill="#000000"
+                    height="13px"
+                    width="13px"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlnsXlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 0 407.437 407.437"
+                    xmlSpace="preserve"
+                  >
+                    <polygon points="386.258,91.567 203.718,273.512 21.179,91.567 0,112.815 203.718,315.87 407.437,112.815 " />
+                  </svg>
+                </button>
+              </th>
+            )
+          })}
         </tr>
       </thead>
       <tbody>
-        {recordings.map((recording) => {
+        {sortedRecordings.map((recording) => {
           return (
             <tr key={recording.id}>
               <td>
@@ -98,6 +162,20 @@ export default function RecordingsTable({ recordings }: { recordings: Recording[
                   })
                 ) : (
                   <span>{recording.instruments[0]}</span>
+                )}
+              </td>
+              <td className={styles.mood}>
+                {recording.mood.length > 1 ? (
+                  recording.mood.map((singleMood, i, allMoods) => {
+                    return (
+                      <span key={singleMood}>
+                        {singleMood}
+                        {i !== allMoods.length - 1 ? "; " : null}
+                      </span>
+                    )
+                  })
+                ) : (
+                  <span>{recording.mood[0]}</span>
                 )}
               </td>
             </tr>

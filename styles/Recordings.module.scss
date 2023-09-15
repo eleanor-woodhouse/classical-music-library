@@ -5,24 +5,36 @@
     padding: 2em;
 }
 
-th.composer{
+.tableHeader {
     border-left: solid black 1px;
 }
 
-th.performer {
-    border-left: solid black 1px;
+.tableHeader.name {
+    border-left: none;
 }
 
-th.period {
-    border-left: solid black 1px;
+.tableHeaderWrapper {
+    flex-grow: 1;
+    text-align: start;
 }
 
-th.size {
-    border-left: solid black 1px;
+.headerButton {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
 }
 
-th.instrument {
-    border-left: solid black 1px;
+svg.headerArrow {
+    fill: snow;
+}
+
+svg.ascending {
+    fill: navy;
+}
+
+svg.descending {
+    fill: navy;
+    transform: rotate(180deg);
 }
 
 td.composer {
@@ -42,5 +54,9 @@ td.size {
 }
 
 td.instrument {
+    border-left: solid black 1px;
+}
+
+td.mood {
     border-left: solid black 1px;
 }

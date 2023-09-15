@@ -1,8 +1,7 @@
 .filtersWrapper {
     display: flex;
     width: 100%;
-    margin-bottom: 4rem;
-    font-size: 15px;
+    margin-bottom: 6rem;
 }
 
 .filter {
@@ -10,6 +9,8 @@
     // border: solid 1px;
     // border-radius: 30px;
     margin: 1rem;
+    max-height: 377px;
+    overflow: hidden;
 }
 
 .filterName {

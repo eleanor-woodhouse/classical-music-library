@@ -28,6 +28,7 @@ export type Recording = {
   size: string[]
   period: string[]
   instruments: string[]
+  mood: string[]
   urls: ExternalUrls
   label: string
 }

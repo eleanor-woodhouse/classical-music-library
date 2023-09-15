@@ -74,6 +74,6 @@ function filterOptions(options: Person[] | undefined[]): Person[] | string[] {
   return options.filter((option) => option !== undefined) as Person[]
 }
 
-function isPerson(option: string | Person): option is Person {
+export function isPerson(option: string | Person): option is Person {
   return typeof option !== "string"
 }
