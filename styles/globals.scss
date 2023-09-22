@@ -315,9 +315,11 @@
      display: none;
    }
 
+@import "variables";
+
 body {
     cursor: default;
-    background-color: snow;
+    background-color: $base-color;
     font-size: 0.78rem;;
     margin: 0;
     padding: 0;
@@ -335,12 +337,13 @@ h1 {
     margin-block-start: 0em;
     margin-block-end: 0em;
     font-size: 1.5rem;
+    color: $title;
 }
 
 ul {
     list-style: none;
     margin: 0;
-    padding: 1rem;
+    width: fit-content;
 }
 
 main {
@@ -361,14 +364,14 @@ thead {
 th {
     text-align: left;
     font-weight: 400;
-    padding: 0.5em 0.66em;
+    padding: 0.7em 0.66em 0.7em 1em;
     cursor: pointer;
     max-width: 0;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     border-bottom: solid black 1px;
-    color: darkblue;
+    color: $table-header;
     font-size: 0.9rem;
 }
 
@@ -380,6 +383,15 @@ tbody {
 tr {
     display: table-row;
     border-bottom: 1px solid;
+    z-index: 1;
+}
+
+tr:hover {
+  background-color: rgba(144, 85, 36, 0.274);
+}
+
+.headerRow:hover {
+  background-color: $base-color;
 }
 
 tr:last-child {
@@ -389,7 +401,7 @@ tr:last-child {
 td {
     text-align: left;
     font-weight: 400;
-    padding: 0.5em 0.66em;
+    padding: 0.7em 0.66em 0.7em 1em;
     cursor: pointer;
     max-width: 0;
     overflow: hidden;
@@ -400,6 +412,7 @@ td {
 a {
     text-decoration: none;
     color: black;
+    width: 100%;
 }
 
 button {

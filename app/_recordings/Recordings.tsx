@@ -2,6 +2,9 @@ import { useEffect, useState } from "react"
 import { Filter, Recording } from "../types"
 import styles from "@/styles/Recordings.module.scss"
 import { sortRecords } from "./helpers"
+import localFont from "next/font/local"
+
+const compModern = localFont({ src: "../../public/cmunci.woff" })
 
 export default function RecordingsTable({ recordings }: { recordings: Recording[] }) {
   const [sortConfig, setSortConfig] = useState<{
@@ -21,17 +24,17 @@ export default function RecordingsTable({ recordings }: { recordings: Recording[
     instruments: "",
     mood: "",
   })
+  const [albumVisible, setAlbumVisible] = useState(false)
+  const [visibleAlbumId, setVisibleAlbumId] = useState("")
+  const [albumImageUrl, setAlbumImageUrl] = useState("")
 
   function handleClick(filter: Filter["id"] | "name") {
     let direction = "ascending"
-    if (sortConfig.direction === "ascending") {
+    if (sortConfig.direction === "ascending" && sortConfig.sortedField === filter) {
       direction = "descending"
     }
     setSortConfig({ sortedField: filter, direction })
-    refreshArrow(filter, direction)
-  }
-
-  function refreshArrow(filter: string, direction: string) {
+    // refreshArrow(filter, direction)
     setArrow({
       name: "",
       composer: "",
@@ -44,34 +47,44 @@ export default function RecordingsTable({ recordings }: { recordings: Recording[
     })
   }
 
+  function handleMouseEnter(recordID: string) {
+    const found = recordings.find((recording) => recording.id === recordID)
+    if (found) {
+      setAlbumImageUrl(found.urls.image)
+      setVisibleAlbumId(recordID)
+      setAlbumVisible(true)
+    }
+  }
+
+  function handleMouseLeave() {
+    setAlbumVisible(false)
+  }
+
   useEffect(() => {
     setSortedRecordings(sortRecords(sortConfig, recordings))
   }, [sortConfig, recordings])
 
-  const headers: (Filter["id"] | "name")[] = ["name", "composer", "performer", "period", "size", "instruments", "mood"]
+  const headers: (Filter["id"] | "name")[] = ["name", "composer", "performer", "period", "instruments", "size", "mood"]
 
   return (
     <table className={styles.recordingsTable}>
       <thead>
-        <tr>
+        <tr className={"headerRow"}>
           {headers.map((header) => {
             const headerTitle = header.charAt(0).toUpperCase() + header.slice(1)
             return (
               <th key={header} className={`${styles.tableHeader} ${styles[header]}`}>
                 <button className={styles.headerButton} onClick={() => handleClick(header)}>
-                  <div className={styles.tableHeaderWrapper}>{headerTitle}</div>
+                  <div className={`${styles.tableHeaderText} ${compModern.className}`}>{headerTitle}</div>
                   <svg
                     className={`${styles.headerArrow} ${styles[arrow[header]]}`}
-                    fill="#000000"
-                    height="13px"
-                    width="13px"
-                    version="1.1"
+                    width="24"
+                    height="24"
                     xmlns="http://www.w3.org/2000/svg"
-                    xmlnsXlink="http://www.w3.org/1999/xlink"
-                    viewBox="0 0 407.437 407.437"
-                    xmlSpace="preserve"
+                    fillRule="evenodd"
+                    clipRule="evenodd"
                   >
-                    <polygon points="386.258,91.567 203.718,273.512 21.179,91.567 0,112.815 203.718,315.87 407.437,112.815 " />
+                    <path d="M11 2.206l-6.235 7.528-.765-.645 7.521-9 7.479 9-.764.646-6.236-7.53v21.884h-1v-21.883z" />
                   </svg>
                 </button>
               </th>
@@ -83,8 +96,19 @@ export default function RecordingsTable({ recordings }: { recordings: Recording[
         {sortedRecordings.map((recording) => {
           return (
             <tr key={recording.id}>
-              <td>
-                <a href={recording.urls.spotify}>{recording.name}</a>
+              <td
+                className={styles.name}
+                onMouseEnter={() => handleMouseEnter(recording.id)}
+                onMouseLeave={() => handleMouseLeave()}
+              >
+                <a href={recording.urls.spotify} target="_blank" rel="noopener noreferrer">
+                  <div className={styles.nameCell}>{recording.name}</div>
+                </a>
+                {albumVisible && visibleAlbumId === recording.id && (
+                  <div className={styles.floatingImage}>
+                    <img src={albumImageUrl} className={styles.albumImage} />
+                  </div>
+                )}
               </td>
               <td className={styles.composer}>
                 {recording.composer.length > 1 ? (
@@ -136,6 +160,20 @@ export default function RecordingsTable({ recordings }: { recordings: Recording[
                   <span>{recording.period[0]}</span>
                 )}
               </td>
+              <td className={styles.instruments}>
+                {recording.instruments.length > 1 ? (
+                  recording.instruments.map((singleInstrument, i, allInstruments) => {
+                    return (
+                      <span key={singleInstrument}>
+                        {singleInstrument}
+                        {i !== allInstruments.length - 1 ? "; " : null}
+                      </span>
+                    )
+                  })
+                ) : (
+                  <span>{recording.instruments[0]}</span>
+                )}
+              </td>
               <td className={styles.size}>
                 {recording.size.length > 1 ? (
                   recording.size.map((singleSize, i, allSizes) => {
@@ -148,20 +186,6 @@ export default function RecordingsTable({ recordings }: { recordings: Recording[
                   })
                 ) : (
                   <span>{recording.size[0]}</span>
-                )}
-              </td>
-              <td className={styles.instrument}>
-                {recording.instruments.length > 1 ? (
-                  recording.instruments.map((singleInstrument, i, allInstruments) => {
-                    return (
-                      <span key={singleInstrument}>
-                        {singleInstrument}
-                        {i !== allInstruments.length - 1 ? "; " : null}
-                      </span>
-                    )
-                  })
-                ) : (
-                  <span>{recording.instruments[0]}</span>
                 )}
               </td>
               <td className={styles.mood}>

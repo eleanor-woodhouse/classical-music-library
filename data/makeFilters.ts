@@ -53,15 +53,65 @@ export function makeFilters(recordingsData: Recording[]): Filter[] {
           } else {
             return a.lastName > b.lastName ? 1 : -1
           }
-        } else {
-          return 0
         }
+        return 0
       })
 
       return singleFilter
     }
 
     singleFilter.options = optionsAsStrings
+
+    if (category === "size") {
+      singleFilter.options.sort((a, b) => {
+        const sizeOrder = {
+          solo: 1,
+          duet: 2,
+          trio: 3,
+          quartet: 4,
+          quintet: 5,
+          sextet: 6,
+          choir: 7,
+          opera: 8,
+          orchestra: 9,
+        }
+        const firstValue = a.toLowerCase() as keyof typeof sizeOrder
+        const secondValue = b.toLowerCase() as keyof typeof sizeOrder
+
+        if (sizeOrder[firstValue] < sizeOrder[secondValue]) {
+          return -1
+        }
+        if (sizeOrder[firstValue] > sizeOrder[secondValue]) {
+          return 1
+        }
+        return 0
+      })
+      return singleFilter
+    }
+
+    if (category === "period") {
+      singleFilter.options.sort((a, b) => {
+        const periodOrder = {
+          baroque: 1,
+          classical: 2,
+          romantic: 3,
+          impressionist: 4,
+          ["early modern"]: 5,
+          ["20th century"]: 6,
+        }
+        const firstValue = a.toLowerCase() as keyof typeof periodOrder
+        const secondValue = b.toLowerCase() as keyof typeof periodOrder
+
+        if (periodOrder[firstValue] < periodOrder[secondValue]) {
+          return -1
+        }
+        if (periodOrder[firstValue] > periodOrder[secondValue]) {
+          return 1
+        }
+        return 0
+      })
+      return singleFilter
+    }
 
     singleFilter.options.sort()
 

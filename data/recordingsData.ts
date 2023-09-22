@@ -394,14 +394,14 @@ export const recordings: Recording[] = [
     id: "3VVSCpXMeqA7nnTjcXk4KK",
     name: "The Besancon Piano Recital",
     recordingYear: "1957",
-    compositionYear: ["1700s - 1800s"],
+    compositionYear: ["1760"],
     composer: [
       {
         firstName: "Johann Sebastian",
         lastName: "Bach",
       },
       {
-        firstName: "Wolfgan Amadeus",
+        firstName: "Wolfgang Amadeus",
         lastName: "Mozart",
       },
       {

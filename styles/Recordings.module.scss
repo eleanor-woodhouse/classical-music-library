@@ -1,3 +1,20 @@
+@import "variables";
+
+.nameCell {
+    width: 100%;
+}
+
+.albumImage {
+    max-width: 400px;
+    max-height: 400px;
+}
+
+.floatingImage {
+    position: absolute;
+    z-index: 100;
+    transform: translate(75%, -110%);
+}
+
 .recordingsTable {
     width: 100%;
     position: relative;
@@ -9,13 +26,41 @@
     border-left: solid black 1px;
 }
 
-.tableHeader.name {
+th.name {
     border-left: none;
+    min-width: 25em;
+    width: 30.5em;
 }
 
-.tableHeaderWrapper {
+th.composer {
+    min-width: 13em;
+    width: 13em;
+}
+
+th.performer {
+    min-width: 13em;
+    width: 15em;
+}
+
+th.size {
+    min-width: 10em;
+    width: 10em;
+}
+
+th.period {
+    min-width: 10em;
+    width: 10em;
+}
+
+th.instrumentss {
+    min-width: 14em;
+    width: 14em;
+}
+
+.tableHeaderText {
     flex-grow: 1;
     text-align: start;
+    margin: auto;
 }
 
 .headerButton {
@@ -25,38 +70,399 @@
 }
 
 svg.headerArrow {
-    fill: snow;
+    fill: $base-color;
+    scale: 80%;
+    height: fit-content;
 }
 
 svg.ascending {
-    fill: navy;
+    fill: $table-header;
 }
 
 svg.descending {
-    fill: navy;
+    fill: $table-header;
     transform: rotate(180deg);
+}
+
+td.name {
+    min-width: 25em;
+    width: 30.5em;
 }
 
 td.composer {
     border-left: solid black 1px;
+    min-width: 13em;
+    width: 13em;
 }
 
 td.performer {
     border-left: solid black 1px;
+    min-width: 13em;
+    width: 15em;
 }
 
 td.period {
     border-left: solid black 1px;
+    min-width: 10em;
+    width: 10em;
 }
 
 td.size {
     border-left: solid black 1px;
+    min-width: 10em;
+    width: 10em;
 }
 
-td.instrument {
+td.instruments {
     border-left: solid black 1px;
+    min-width: 14em;
+    width: 14em;
 }
 
 td.mood {
     border-left: solid black 1px;
 }
+
+@media only screen and (min-width: 1381px) and (max-width: 1500px) {
+    th.name {
+        border-left: none;
+        min-width: 22em;
+        width: 22em;
+    }
+
+    td.name {
+        min-width: 22em;
+        width: 22em;
+    }
+
+    th.mood {
+        display: none;
+    }
+
+    td.mood {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 1361px) and (max-width: 1380px) {
+    th.name {
+        border-left: none;
+        min-width: 22em;
+        width: 22em;
+    }
+
+    td.name {
+        min-width: 22em;
+        width: 22em;
+    }
+
+    th.mood {
+        display: none;
+    }
+
+    td.mood {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 1191px) and (max-width: 1360px) {
+    th.name {
+        border-left: none;
+        min-width: 22em;
+        width: 22em;
+    }
+
+    td.name {
+        min-width: 22em;
+        width: 22em;
+    }
+
+    th.mood {
+        display: none;
+    }
+
+    td.mood {
+        display: none;
+    }
+
+    th.size {
+        display: none;
+    }
+
+    td.size {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 1026px) and (max-width: 1190px) {
+    th.name {
+        border-left: none;
+        min-width: 22em;
+        width: 22em;
+    }
+
+    td.name {
+        min-width: 22em;
+        width: 22em;
+    }
+
+    th.mood {
+        display: none;
+    }
+
+    td.mood {
+        display: none;
+    }
+
+    th.size {
+        display: none;
+    }
+
+    td.size {
+        display: none;
+    }
+
+    th.period {
+        display: none;
+    }
+
+    td.period {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 976px) and (max-width: 1025px) {
+    th.name {
+        border-left: none;
+        min-width: 22em;
+        width: 22em;
+    }
+
+    td.name {
+        min-width: 22em;
+        width: 22em;
+    }
+
+    th.instruments {
+        min-width: 8em;
+        width: 14em;
+    }
+
+    td.instruments {
+        min-width: 8em;
+        width: 14em;
+    }
+
+    th.mood {
+        display: none;
+    }
+
+    td.mood {
+        display: none;
+    }
+
+    th.size {
+        display: none;
+    }
+
+    td.size {
+        display: none;
+    }
+
+    th.period {
+        display: none;
+    }
+
+    td.period {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 450px) and (max-width: 975px) {
+    th.name {
+        border-left: none;
+        min-width: 22em;
+        width: 22em;
+    }
+
+    td.name {
+        min-width: 22em;
+        width: 22em;
+    }
+
+    th.instruments {
+        display: none;
+    }
+
+    td.instruments {
+        display: none;
+    }
+
+    th.mood {
+        display: none;
+    }
+
+    td.mood {
+        display: none;
+    }
+
+    th.size {
+        display: none;
+    }
+
+    td.size {
+        display: none;
+    }
+
+    th.period {
+        display: none;
+    }
+
+    td.period {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 450px) and (max-width: 975px) {
+    th.name {
+        border-left: none;
+        min-width: 15em;
+        width: 22em;
+    }
+
+    td.name {
+        min-width: 15em;
+        width: 22em;
+    }
+
+    th.instruments {
+        display: none;
+    }
+
+    td.instruments {
+        display: none;
+    }
+
+    th.mood {
+        display: none;
+    }
+
+    td.mood {
+        display: none;
+    }
+
+    th.size {
+        display: none;
+    }
+
+    td.size {
+        display: none;
+    }
+
+    th.period {
+        display: none;
+    }
+
+    td.period {
+        display: none;
+    }
+}
+
+// TODO small screen and mobile styling (need different approach entirely)
+@media only screen and (min-width: 450px) and (max-width: 895px) {
+    th.name {
+        border-left: none;
+        min-width: 15em;
+        width: 22em;
+    }
+
+    td.name {
+        min-width: 15em;
+        width: 22em;
+    }
+
+    th.performer {
+        display: none;
+    }
+
+    td.performer {
+        display: none;
+    }
+
+    th.instruments {
+        display: none;
+    }
+
+    td.instruments {
+        display: none;
+    }
+
+    th.mood {
+        display: none;
+    }
+
+    td.mood {
+        display: none;
+    }
+
+    th.size {
+        display: none;
+    }
+
+    td.size {
+        display: none;
+    }
+
+    th.period {
+        display: none;
+    }
+
+    td.period {
+        display: none;
+    }
+}
+
+// @media only screen and (max-width: 450px) {
+//     th.name {
+//         border-left: none;
+//         min-width: 15em;
+//         width: 22em;
+//     }
+
+//     td.name {
+//         min-width: 15em;
+//         width: 22em;
+//     }
+
+//     th.instruments {
+//         display: none;
+//     }
+
+//     td.instruments {
+//         display: none;
+//     }
+
+//     th.mood {
+//         display: none;
+//     }
+
+//     td.mood {
+//         display: none;
+//     }
+
+//     th.size {
+//         display: none;
+//     }
+
+//     td.size {
+//         display: none;
+//     }
+
+//     th.period {
+//         display: none;
+//     }
+
+//     td.period {
+//         display: none;
+//     }
+// }
