@@ -24,9 +24,7 @@ export default function RecordingsTable({ recordings }: { recordings: Recording[
     instruments: "",
     mood: "",
   })
-  const [albumVisible, setAlbumVisible] = useState(false)
-  const [visibleAlbumId, setVisibleAlbumId] = useState("")
-  const [albumImageUrl, setAlbumImageUrl] = useState("")
+  const [selectedRecordId, setSelectedRecordId] = useState("")
 
   function handleClick(filter: Filter["id"] | "name") {
     let direction = "ascending"
@@ -47,17 +45,13 @@ export default function RecordingsTable({ recordings }: { recordings: Recording[
     })
   }
 
-  function handleMouseEnter(recordID: string) {
+  function handleRecordingClick(recordID: string) {
     const found = recordings.find((recording) => recording.id === recordID)
-    if (found) {
-      setAlbumImageUrl(found.urls.image)
-      setVisibleAlbumId(recordID)
-      setAlbumVisible(true)
+    if (found?.id === selectedRecordId) {
+      setSelectedRecordId("")
+    } else if (found) {
+      setSelectedRecordId(recordID)
     }
-  }
-
-  function handleMouseLeave() {
-    setAlbumVisible(false)
   }
 
   useEffect(() => {
@@ -95,114 +89,123 @@ export default function RecordingsTable({ recordings }: { recordings: Recording[
       <tbody>
         {sortedRecordings.map((recording) => {
           return (
-            <tr key={recording.id}>
-              <td
-                className={styles.name}
-                onMouseEnter={() => handleMouseEnter(recording.id)}
-                onMouseLeave={() => handleMouseLeave()}
+            <>
+              <tr
+                key={recording.id}
+                onClick={() => handleRecordingClick(recording.id)}
+                className={selectedRecordId === recording.id ? "selected" : ""}
               >
-                <a href={recording.urls.spotify} target="_blank" rel="noopener noreferrer">
+                <td className={`${styles.name} ${selectedRecordId === recording.id ? styles.active : ""}`}>
+                  {/* <a href={recording.urls.spotify} target="_blank" rel="noopener noreferrer"> */}
                   <div className={styles.nameCell}>{recording.name}</div>
-                </a>
-                {albumVisible && visibleAlbumId === recording.id && (
-                  <div className={styles.floatingImage}>
-                    <img src={albumImageUrl} className={styles.albumImage} />
-                  </div>
-                )}
-              </td>
-              <td className={styles.composer}>
-                {recording.composer.length > 1 ? (
-                  recording.composer.map((singleComposer, i, everyComposer) => {
-                    return (
-                      <span key={`${singleComposer.firstName}-${singleComposer.lastName}`}>
-                        {i === everyComposer.length - 1 ? " & " : null}
-                        {singleComposer.firstName}
-                        {singleComposer.lastName ? ` ${singleComposer.lastName}` : null}
-                        {everyComposer.length > 2 && i !== everyComposer.length - 1 ? ", " : null}
-                      </span>
-                    )
-                  })
-                ) : (
-                  <span>
-                    {recording.composer[0].firstName} {recording.composer[0].lastName}
-                  </span>
-                )}
-              </td>
-              <td className={styles.performer}>
-                {recording.performer.length > 1 ? (
-                  recording.performer.map((singlePerformer, i, everyPerformer) => {
-                    return (
-                      <span key={`${singlePerformer.firstName}-${singlePerformer.lastName}`}>
-                        {i === everyPerformer.length - 1 ? " & " : null}
-                        {singlePerformer.firstName}
-                        {singlePerformer.lastName ? ` ${singlePerformer.lastName}` : null}
-                        {everyPerformer.length > 2 && i !== everyPerformer.length - 1 ? ", " : null}
-                      </span>
-                    )
-                  })
-                ) : (
-                  <span>
-                    {recording.performer[0].firstName} {recording.performer[0].lastName}
-                  </span>
-                )}
-              </td>
-              <td className={styles.period}>
-                {recording.period.length > 1 ? (
-                  recording.period.map((singlePeriod, i, allPeriods) => {
-                    return (
-                      <span key={singlePeriod}>
-                        {singlePeriod}
-                        {i !== allPeriods.length - 1 ? "; " : null}
-                      </span>
-                    )
-                  })
-                ) : (
-                  <span>{recording.period[0]}</span>
-                )}
-              </td>
-              <td className={styles.instruments}>
-                {recording.instruments.length > 1 ? (
-                  recording.instruments.map((singleInstrument, i, allInstruments) => {
-                    return (
-                      <span key={singleInstrument}>
-                        {singleInstrument}
-                        {i !== allInstruments.length - 1 ? "; " : null}
-                      </span>
-                    )
-                  })
-                ) : (
-                  <span>{recording.instruments[0]}</span>
-                )}
-              </td>
-              <td className={styles.size}>
-                {recording.size.length > 1 ? (
-                  recording.size.map((singleSize, i, allSizes) => {
-                    return (
-                      <span key={singleSize}>
-                        {singleSize}
-                        {i !== allSizes.length - 1 ? "; " : null}
-                      </span>
-                    )
-                  })
-                ) : (
-                  <span>{recording.size[0]}</span>
-                )}
-              </td>
-              <td className={styles.mood}>
-                {recording.mood.length > 1 ? (
-                  recording.mood.map((singleMood, i, allMoods) => {
-                    return (
-                      <span key={singleMood}>
-                        {singleMood}
-                        {i !== allMoods.length - 1 ? "; " : null}
-                      </span>
-                    )
-                  })
-                ) : (
-                  <span>{recording.mood[0]}</span>
-                )}
-              </td>
-            </tr>
+                  {/* </a> */}
+                </td>
+                <td className={`${styles.composer} ${selectedRecordId === recording.id ? styles.selected : ""}`}>
+                  {recording.composer.length > 1 ? (
+                    recording.composer.map((singleComposer, i, everyComposer) => {
+                      return (
+                        <span className={styles.text} key={`${singleComposer.firstName}-${singleComposer.lastName}`}>
+                          {i === everyComposer.length - 1 ? " & " : null}
+                          {singleComposer.firstName}
+                          {singleComposer.lastName ? ` ${singleComposer.lastName}` : null}
+                          {everyComposer.length > 2 && i !== everyComposer.length - 1 ? ", " : null}
+                        </span>
+                      )
+                    })
+                  ) : (
+                    <span className={styles.text}>
+                      {recording.composer[0].firstName} {recording.composer[0].lastName}
+                    </span>
+                  )}
+                </td>
+                <td className={`${styles.performer} ${selectedRecordId === recording.id ? styles.selected : ""}`}>
+                  {recording.performer.length > 1 ? (
+                    recording.performer.map((singlePerformer, i, everyPerformer) => {
+                      return (
+                        <span className={styles.text} key={`${singlePerformer.firstName}-${singlePerformer.lastName}`}>
+                          {i === everyPerformer.length - 1 ? " & " : null}
+                          {singlePerformer.firstName}
+                          {singlePerformer.lastName ? ` ${singlePerformer.lastName}` : null}
+                          {everyPerformer.length > 2 && i !== everyPerformer.length - 1 ? ", " : null}
+                        </span>
+                      )
+                    })
+                  ) : (
+                    <span className={styles.text}>
+                      {recording.performer[0].firstName} {recording.performer[0].lastName}
+                    </span>
+                  )}
+                </td>
+                <td className={`${styles.period} ${selectedRecordId === recording.id ? styles.selected : ""}`}>
+                  {recording.period.length > 1 ? (
+                    recording.period.map((singlePeriod, i, allPeriods) => {
+                      return (
+                        <span key={singlePeriod} className={styles.text}>
+                          {singlePeriod}
+                          {i !== allPeriods.length - 1 ? "; " : null}
+                        </span>
+                      )
+                    })
+                  ) : (
+                    <span className={styles.text}>{recording.period[0]}</span>
+                  )}
+                </td>
+                <td className={`${styles.instruments} ${selectedRecordId === recording.id ? styles.selected : ""}`}>
+                  {recording.instruments.length > 1 ? (
+                    recording.instruments.map((singleInstrument, i, allInstruments) => {
+                      return (
+                        <span className={styles.text} key={singleInstrument}>
+                          {singleInstrument}
+                          {i !== allInstruments.length - 1 ? "; " : null}
+                        </span>
+                      )
+                    })
+                  ) : (
+                    <span className={styles.text}>{recording.instruments[0]}</span>
+                  )}
+                </td>
+                <td className={`${styles.size} ${selectedRecordId === recording.id ? styles.selected : ""}`}>
+                  {recording.size.length > 1 ? (
+                    recording.size.map((singleSize, i, allSizes) => {
+                      return (
+                        <span className={styles.text} key={singleSize}>
+                          {singleSize}
+                          {i !== allSizes.length - 1 ? "; " : null}
+                        </span>
+                      )
+                    })
+                  ) : (
+                    <span className={styles.text}>{recording.size[0]}</span>
+                  )}
+                </td>
+                <td className={`${styles.mood} ${selectedRecordId === recording.id ? styles.selected : ""}`}>
+                  {recording.mood.length > 1 ? (
+                    recording.mood.map((singleMood, i, allMoods) => {
+                      return (
+                        <span key={singleMood} className={styles.text}>
+                          {singleMood}
+                          {i !== allMoods.length - 1 ? "; " : null}
+                        </span>
+                      )
+                    })
+                  ) : (
+                    <span className={styles.text}>{recording.mood[0]}</span>
+                  )}
+                </td>
+              </tr>
+              {selectedRecordId === recording.id ? (
+                <tr className={styles.detailsRow}>
+                  <td colSpan={7}>
+                    <div className={styles.detailsContainer}>
+                      <div className={styles.details}></div>
+                      <img src={recording.urls.image} className={styles.albumImage} />
+                    </div>
+                  </td>
+                </tr>
+              ) : (
+                <></>
+              )}
+            </>
           )
         })}
       </tbody>

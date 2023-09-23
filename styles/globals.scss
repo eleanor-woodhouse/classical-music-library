@@ -103,19 +103,6 @@
      top: -0.5em;
    }
    
-   /* Embedded content
-      ========================================================================== */
-   
-   /**
-    * Remove the border on images inside links in IE 10.
-    */
-   
-   img {
-     border-style: none;
-     min-width: 100%;
-     max-width: 120%;
-   }
-   
    /* Forms
       ========================================================================== */
    
@@ -387,7 +374,15 @@ tr {
 }
 
 tr:hover {
-  background-color: rgba(144, 85, 36, 0.274);
+  background-color: rgba(237, 213, 194, 0.111);
+}
+
+tr.selected {
+  border-bottom: $base-color;
+}
+
+tr.selected:hover {
+  background-color: $base-color;
 }
 
 .headerRow:hover {

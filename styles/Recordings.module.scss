@@ -1,14 +1,5 @@
 @import "variables";
 
-.nameCell {
-    width: 100%;
-}
-
-.albumImage {
-    max-width: 400px;
-    max-height: 400px;
-}
-
 .floatingImage {
     position: absolute;
     z-index: 100;
@@ -89,6 +80,17 @@ td.name {
     width: 30.5em;
 }
 
+.nameCell {
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.active>.nameCell {
+    position: absolute;
+    overflow: visible;
+}
+
 td.composer {
     border-left: solid black 1px;
     min-width: 13em;
@@ -121,6 +123,45 @@ td.instruments {
 
 td.mood {
     border-left: solid black 1px;
+}
+
+td.selected {
+    color: $base-color;
+    border-left: solid $base-color 1px;
+}
+
+td.selected > span.text {
+    display: none;
+}
+
+.detailsRow {
+    height: 5rem;
+    width: 100%;
+}
+
+.detailsRow:hover {
+    background-color: $base-color;
+}
+
+.detailsContainer {
+    cursor: default;
+    display: flex;
+    justify-content: end;
+    width: 100%;
+}
+
+.details {
+    flex-grow: 1;
+    margin: 2rem;
+    margin-top: 0;
+}
+
+.albumImage {
+    margin: 2rem;
+    margin-top: 0;
+    height: 350px;
+    object-fit: contain;
+    width: 350px;
 }
 
 @media only screen and (min-width: 1381px) and (max-width: 1500px) {
