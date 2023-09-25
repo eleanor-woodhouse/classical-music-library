@@ -21,6 +21,7 @@ export async function GET(req: NextRequest) {
       redirect_uri: "http://localhost:3000/api/callback",
     }
 
+    // TODO move to environment variables
     const encoded = encodeAsBase64("d7a97b41eaff42fe828f8d6841f57ed4:92564e9e9023412e8011a1c18333e840")
 
     const headers = {

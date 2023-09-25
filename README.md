@@ -38,6 +38,8 @@ npm run dev
 
 ### Immediate
 
+Handle environment variables
+
 Refactor Filter list items in Filter component
 
 ### For Stage One
