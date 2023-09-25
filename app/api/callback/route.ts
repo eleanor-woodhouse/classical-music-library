@@ -38,6 +38,10 @@ export async function GET(req: NextRequest) {
 
         const albumData = res.data
 
+        // TODO Soooo it turns out spotify doesn't actually return genre after all -_-
+        // Create UI to discard/choose which recordings to include in library
+        // Create data mappers for raw spotify data --> my domain object
+        // For now this data has currently been hard coded and manually filtered in ./data/recordingsData.ts
         console.log(albumData)
 
         return NextResponse.json({ message: "It's all gone well" })

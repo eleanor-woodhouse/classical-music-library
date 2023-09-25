@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { Filter, FilterState, Person, Recording } from "../types"
-import RecordingsTable from "../_recordings/Recordings"
+import RecordingsTable from "../_recordings/RecordingsTable"
 import styles from "@/styles/page.module.scss"
 import { filterRecordings, collectSelectedFilters } from "./filterLogic"
 import { makeFilterState } from "./makeFilterState"
@@ -27,7 +27,7 @@ export default function Filters({ allRecordings }: { allRecordings: Recording[] 
     }))
   }
 
-  function handleListClick(index: number) {
+  function handleListExpansionClick(index: number) {
     const newFilterExpansions = [...filterExpansions]
     newFilterExpansions[index] = !newFilterExpansions[index]
     setFilterExpansions(newFilterExpansions)
@@ -50,6 +50,7 @@ export default function Filters({ allRecordings }: { allRecordings: Recording[] 
               <div className={styles.listWrapper}>
                 <ul className={styles.filterOptions}>
                   {filter.options.map((option: string | Person, i) => {
+                    // TODO completely refactor rendering list items
                     if (i < 10 && !filterExpansions[filterIndex]) {
                       if (typeof option !== "string") {
                         if (option.lastName) {
@@ -146,7 +147,7 @@ export default function Filters({ allRecordings }: { allRecordings: Recording[] 
                   })}
                 </ul>
                 {filter.options.length > 10 ? (
-                  <div className={styles.showHide} onClick={() => handleListClick(filterIndex)}>{`${
+                  <div className={styles.showHide} onClick={() => handleListExpansionClick(filterIndex)}>{`${
                     filterExpansions[filterIndex] ? "hide" : "more"
                   }`}</div>
                 ) : (

@@ -11,13 +11,13 @@ export default function RecordingsTable({ recordings }: { recordings: Recording[
     sortedField: Filter["id"] | "name" | null
     direction: string
   }>({
-    sortedField: null,
-    direction: "",
+    sortedField: "composer",
+    direction: "ascending",
   })
   const [sortedRecordings, setSortedRecordings] = useState<Recording[]>(recordings)
   const [arrow, setArrow] = useState({
     name: "",
-    composer: "",
+    composer: "ascending",
     performer: "",
     period: "",
     size: "",
@@ -32,7 +32,6 @@ export default function RecordingsTable({ recordings }: { recordings: Recording[
       direction = "descending"
     }
     setSortConfig({ sortedField: filter, direction })
-    // refreshArrow(filter, direction)
     setArrow({
       name: "",
       composer: "",
@@ -46,18 +45,26 @@ export default function RecordingsTable({ recordings }: { recordings: Recording[
   }
 
   function handleRecordingClick(recordID: string) {
-    const found = recordings.find((recording) => recording.id === recordID)
-    if (found?.id === selectedRecordId) {
-      setSelectedRecordId("")
-    } else if (found) {
-      setSelectedRecordId(recordID)
-    }
+    setSelectedRecordId(recordID === selectedRecordId ? "" : recordID)
   }
 
   useEffect(() => {
     setSortedRecordings(sortRecords(sortConfig, recordings))
   }, [sortConfig, recordings])
 
+  const renderText = (textArray: string[]) =>
+    textArray.length > 1 ? (
+      textArray.map((text, index, array) => (
+        <span key={text} className={styles.text}>
+          {text}
+          {index !== array.length - 1 ? "; " : null}
+        </span>
+      ))
+    ) : (
+      <span className={styles.text}>{textArray[0]}</span>
+    )
+
+  // TODO remove hard coded values
   const headers: (Filter["id"] | "name")[] = ["name", "composer", "performer", "period", "instruments", "size", "mood"]
 
   return (
@@ -96,101 +103,25 @@ export default function RecordingsTable({ recordings }: { recordings: Recording[
                 className={selectedRecordId === recording.id ? "selected" : ""}
               >
                 <td className={`${styles.name} ${selectedRecordId === recording.id ? styles.active : ""}`}>
-                  {/* <a href={recording.urls.spotify} target="_blank" rel="noopener noreferrer"> */}
                   <div className={styles.nameCell}>{recording.name}</div>
-                  {/* </a> */}
                 </td>
                 <td className={`${styles.composer} ${selectedRecordId === recording.id ? styles.selected : ""}`}>
-                  {recording.composer.length > 1 ? (
-                    recording.composer.map((singleComposer, i, everyComposer) => {
-                      return (
-                        <span className={styles.text} key={`${singleComposer.firstName}-${singleComposer.lastName}`}>
-                          {i === everyComposer.length - 1 ? " & " : null}
-                          {singleComposer.firstName}
-                          {singleComposer.lastName ? ` ${singleComposer.lastName}` : null}
-                          {everyComposer.length > 2 && i !== everyComposer.length - 1 ? ", " : null}
-                        </span>
-                      )
-                    })
-                  ) : (
-                    <span className={styles.text}>
-                      {recording.composer[0].firstName} {recording.composer[0].lastName}
-                    </span>
-                  )}
+                  {renderText(recording.composer.map((c) => `${c.firstName}${c.lastName ? ` ${c.lastName}` : ""}`))}
                 </td>
                 <td className={`${styles.performer} ${selectedRecordId === recording.id ? styles.selected : ""}`}>
-                  {recording.performer.length > 1 ? (
-                    recording.performer.map((singlePerformer, i, everyPerformer) => {
-                      return (
-                        <span className={styles.text} key={`${singlePerformer.firstName}-${singlePerformer.lastName}`}>
-                          {i === everyPerformer.length - 1 ? " & " : null}
-                          {singlePerformer.firstName}
-                          {singlePerformer.lastName ? ` ${singlePerformer.lastName}` : null}
-                          {everyPerformer.length > 2 && i !== everyPerformer.length - 1 ? ", " : null}
-                        </span>
-                      )
-                    })
-                  ) : (
-                    <span className={styles.text}>
-                      {recording.performer[0].firstName} {recording.performer[0].lastName}
-                    </span>
-                  )}
+                  {renderText(recording.performer.map((p) => `${p.firstName}${p.lastName ? ` ${p.lastName}` : ""}`))}
                 </td>
                 <td className={`${styles.period} ${selectedRecordId === recording.id ? styles.selected : ""}`}>
-                  {recording.period.length > 1 ? (
-                    recording.period.map((singlePeriod, i, allPeriods) => {
-                      return (
-                        <span key={singlePeriod} className={styles.text}>
-                          {singlePeriod}
-                          {i !== allPeriods.length - 1 ? "; " : null}
-                        </span>
-                      )
-                    })
-                  ) : (
-                    <span className={styles.text}>{recording.period[0]}</span>
-                  )}
+                  {renderText(recording.period)}
                 </td>
                 <td className={`${styles.instruments} ${selectedRecordId === recording.id ? styles.selected : ""}`}>
-                  {recording.instruments.length > 1 ? (
-                    recording.instruments.map((singleInstrument, i, allInstruments) => {
-                      return (
-                        <span className={styles.text} key={singleInstrument}>
-                          {singleInstrument}
-                          {i !== allInstruments.length - 1 ? "; " : null}
-                        </span>
-                      )
-                    })
-                  ) : (
-                    <span className={styles.text}>{recording.instruments[0]}</span>
-                  )}
+                  {renderText(recording.instruments)}
                 </td>
                 <td className={`${styles.size} ${selectedRecordId === recording.id ? styles.selected : ""}`}>
-                  {recording.size.length > 1 ? (
-                    recording.size.map((singleSize, i, allSizes) => {
-                      return (
-                        <span className={styles.text} key={singleSize}>
-                          {singleSize}
-                          {i !== allSizes.length - 1 ? "; " : null}
-                        </span>
-                      )
-                    })
-                  ) : (
-                    <span className={styles.text}>{recording.size[0]}</span>
-                  )}
+                  {renderText(recording.size)}
                 </td>
                 <td className={`${styles.mood} ${selectedRecordId === recording.id ? styles.selected : ""}`}>
-                  {recording.mood.length > 1 ? (
-                    recording.mood.map((singleMood, i, allMoods) => {
-                      return (
-                        <span key={singleMood} className={styles.text}>
-                          {singleMood}
-                          {i !== allMoods.length - 1 ? "; " : null}
-                        </span>
-                      )
-                    })
-                  ) : (
-                    <span className={styles.text}>{recording.mood[0]}</span>
-                  )}
+                  {renderText(recording.mood)}
                 </td>
               </tr>
               {selectedRecordId === recording.id ? (

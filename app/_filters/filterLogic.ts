@@ -5,7 +5,7 @@ export function filterRecordings(everyRecording: Recording[], filtersToApply: Se
   const filteredRecs = everyRecording.filter((recording) => {
     const returnedCategories = categories.every((category) => {
       if (!filtersToApply[category].length) return true
-      // COMMENTS ARE FOR IF ANY OF THE CATEGORIES ARE NOT ARRAYS
+      // COMMENTS ARE FOR IF/WHEN CATEGORIES ARE NOT ARRAYS
       // if (Array.isArray(recording[category])) {
       if (category === "composer" || category === "performer") {
         return recording[category].some((option) => {
@@ -23,7 +23,6 @@ export function filterRecordings(everyRecording: Recording[], filtersToApply: Se
           return filtersToApply[category].includes(option.toLowerCase())
         }
       })
-
       // }
       // return filtersToApply[category].includes(recording[category])
     })

@@ -1,34 +1,74 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Eleanor's Classical Music Library
 
-## Getting Started
+A simple app to help me organise my classical music
 
-First, run the development server:
+#### First stage
+
+Just my library.
+
+Integrate with Spotify – which is terrible at organising your library no matter what the genre, but particularly bad
+with classical music.
+
+#### Further stages
+
+- Integrate with Apple Music, Youtube, Soundcloud etc
+
+- Creation of different libraries: e.g. Classical music; General; Radio shows/mixes
+
+- Allow other users to create their own libraries which are populated from various sources, and which are organised by
+  categories/filters of their own choosing. They will be able to choose from a set list of filters that are
+  automatically populated from the data sources (Spotify etc). For entirely new filters/categories, new fields will be
+  created on the domain objects for the user to populate manually.
+
+This is a [Next.js](https://nextjs.org/) project bootstrapped with
+[`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+
+## Setup
+
+The usual.
+
+#### Terminal
 
 ```bash
+npm i
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## TODOS
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Immediate
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Refactor Filter list items in Filter component
 
-## Learn More
+### For Stage One
 
-To learn more about Next.js, take a look at the following resources:
+### Automatically Populate Library from Spotify
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This was close, but contrary to their docs, it turns out the Spotify API does not return information on album genres.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+My current plan is to pull in EVERY saved album from my library, and create some UI to manually delete the albums I
+don't want a part of my classical music library.
 
-## Deploy on Vercel
+Currently the album data is hard coded in ./data/recordingsData.ts
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Persist Recordings Data
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Move from saving recordings data in the file system to DynamoDB
+
+### UI for creating filter categories
+
+Currently, the filter categories that I want visible in the app are defined in one place, an array in
+`./data/filterCategories.ts`
+
+I have logic that automatically creates the filter categories and their options from this hard-coded array and the
+recordings data (in `./data/makeFilters.ts`)
+
+I want to create UI to choose/define these filter categories (the specific options for each filter will always be
+dynamically pulled from the actual recording data)
+
+### UI for Editing Recordings
+
+For filter/organisational categories that don't exist on Spotify, I want to manually add them to each recording via UI
+(currently I hard coded in `recordingsData.ts``)
+
+Even for categories that do exist on Spotify, I may want to edit/add anyway.

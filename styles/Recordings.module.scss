@@ -68,11 +68,11 @@ svg.headerArrow {
 
 svg.ascending {
     fill: $table-header;
+    transform: rotate(180deg);
 }
 
 svg.descending {
     fill: $table-header;
-    transform: rotate(180deg);
 }
 
 td.name {
