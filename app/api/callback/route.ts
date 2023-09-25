@@ -18,11 +18,10 @@ export async function GET(req: NextRequest) {
     const requestBody = {
       grant_type: "authorization_code",
       code,
-      redirect_uri: "http://localhost:3000/api/callback",
+      redirect_uri: process.env.SPOTIFY_REDIRECT_URI as string,
     }
 
-    // TODO move to environment variables
-    const encoded = encodeAsBase64("d7a97b41eaff42fe828f8d6841f57ed4:92564e9e9023412e8011a1c18333e840")
+    const encoded = encodeAsBase64(`${process.env.SPOTIFY_CLIENT_ID}:${process.env.SPOTIFY_CLIENT_SECRET}`)
 
     const headers = {
       "content-type": "application/x-www-form-urlencoded",

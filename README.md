@@ -34,11 +34,19 @@ npm i
 npm run dev
 ```
 
+#### Environment Variables
+
+Create in the root directory `.env.local` with the following:
+
+```bash
+SPOTIFY_CLIENT_ID=
+SPOTIFY_CLIENT_SECRET=
+SPOTIFY_REDIRECT_URI=http://localhost:3000/callback
+```
+
 ## TODOS
 
 ### Immediate
-
-Handle environment variables
 
 Refactor Filter list items in Filter component
 

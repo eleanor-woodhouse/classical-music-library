@@ -9,8 +9,7 @@ export async function GET() {
   const scope = "user-library-read"
 
   const queryParams = querystring.stringify({
-    // TODO move to environment variables
-    client_id: "d7a97b41eaff42fe828f8d6841f57ed4",
+    client_id: process.env.SPOTIFY_CLIENT_ID,
     response_type: "code",
     redirect_uri: "http://localhost:3000/api/callback",
     state: state,
